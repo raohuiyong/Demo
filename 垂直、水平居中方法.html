@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .bess {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            left: 300px;
+        }
+
+        /*方案一，适用所有元素*/
+        .parent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        /*方案二,只适用于子元素*/
+        .parent2 {
+            /*justify-content: center   子元素水平居中*/
+            /*align-items: center      子元素垂直居中*/
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            display: -webkit-flex;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            cursor: pointer;
+        }
+
+        p {
+            width: 50px;
+            -ms-word-wrap: break-word;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="bess"></div>
+<div class="parent"></div>
+<a class="parent2">
+    <img src="img/jzxsh.png" alt="" width="50">
+    <!--<p>猜猜看我在哪里显示</p>-->
+</a>
+<a href="">我们</a>
+</body>
+</html>

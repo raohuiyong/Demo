@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 1200px;
+            height: 500px;
+            border: 1px solid #f00;
+            margin: 50px auto 0;
+        }
+
+        .small {
+            width: 220px;
+            height: 220px;
+            border: 1px solid yellow;
+            position: relative;
+            float: left;
+        }
+
+        .small b {
+            display: none;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            opacity: 0.4;
+            -ms-filter: Alpha(Opacity=40);
+            filter: Alpha(Opacity=40);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .big {
+            display: none;
+            width: 360px;
+            height: 360px;
+            border: 1px solid blue;
+            overflow: hidden;
+            float: left;
+            margin-left: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .big img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script src="jquery-1.7.1.js"></script>
+    <script>
+        $(function () {
+            $('.small').mousemove(function (e) {
+				
+                $("b").show();
+                $(".big").show();
+                var L = e.pageX;  //鼠标左侧的距离
+                var l = $(this).offset().left;  //当前对象元素距离左侧的距离
+                var left = L - l - 50;  //50 是镜片的中心距离
+                left = left <= 0 ? 0 : left;
+                left = left >= 120 ? 120 : left;  //120是图片的一半
+
+                var T = e.pageY;
+                var t = $(this).offset().top;
+                var top = T - t - 50;
+                top = top <= 0 ? 0 : top;
+                top = top >= 120 ? 120 : top;
+                $('b').css({"left": left, "top": top});
+
+                //大图
+                var imgLeft = -left * 2;
+                imgLeft=imgLeft< -80 ? -80 :imgLeft;
+                var imgTop = -top * 2;
+                imgTop=imgTop < -80 ? -80 :imgTop;  //80是为了减少留白
+                $(".big img").css({"left": imgLeft, "top": imgTop});
+            }).mouseout(function () {
+                $("b").hide();
+                $(".big").hide();
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="box">
+    <div class="small"><img src="img/z2.jpg" alt=""><b></b></div>
+    <div class="big"><img src="img/z.jpg" alt=""></div>
+</div>
+</body>
+</html>

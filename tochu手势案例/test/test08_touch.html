@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Test Tap</title>
+<style>
+	.touchpad{
+		width: 100%;
+		height: 200px;
+		font-size: 40px;
+		text-align: center;
+		line-height: 200px;
+		background: rgba(0,0,0,0.5);
+		position: relative;
+		color: #ddd;
+	}
+
+	.ball{
+		display: none;
+		position: absolute;
+		width: 25px;
+		height: 25px;
+		border-radius: 15px;
+		background-color: #7AE6FF;
+		top: 0;
+		left: 0;
+	}
+	p{
+		height: 30px;
+	}
+
+</style>
+</head>
+<body>
+
+<p id="desc"></p>
+<div id="touchPad" class="touchpad">触摸板</div>
+<div id="ball" class="ball"></div>
+
+<script src="../js/zepto.js"></script>
+<script type="text/javascript">
+    /*
+    * touchstart:手指触摸屏幕触发（已经有手指放屏幕上不会触发）
+    * touchmove:手指在屏幕滑动，连续触发
+    * touchend:手指离开屏幕时触发
+    * touchcancel:系统取消touch时候触发（不常用）
+    *
+    * 除乐常见的事件属性外，触摸事件包含专有的触摸属性
+    * touches:跟踪触摸操作的touch对象数组
+    * changeTouches：上次触摸改变的touch对象数组
+    *
+    * 每个touch对象包含属性：
+    * （根据touch对象跟踪触摸具体未知，从而判断触摸交互或手势事件）
+    * ckuebtX:触摸目标在视口中的X坐标
+    * clientY:触摸目标在视口中的y坐标
+    * identifier:标识触摸的唯一ID
+    * pageX:触摸目标在页面中的x坐标（包含滚动）
+    * pageY:触摸目标在页面中的Y坐标（包含滚动）
+    * screenX:触摸目标在屏幕中的X坐标
+    * screenY:触摸目标在屏幕中的Y坐标
+    * target：触摸目标的DOM节点目标
+    * */
+	var touchpad = document.querySelector('#touchPad'),
+		ball = document.querySelector('#ball'),
+		desc = document.querySelector('#desc');
+
+	//简单的touch事件（废弃）
+	var touchHandler = function(e){
+		var type = e.type;
+
+
+		//注意touchend的touches和targetTouches为空，只偶有changeTouches获取上次一的touchTlist
+		if(type != 'touchend'){
+			var pos = {
+				x : e.touches[0].clientX,
+				y : e.touches[0].clientY
+			};
+
+			ball.style.left = pos.x + 'px';
+			ball.style.top = pos.y + 'px';
+			desc.innerHTML = e.type + '(clienX:'+pos.x+', clientY:'+ pos.y+')';
+		}else{
+			desc.innerHTML = e.type ;
+		}
+		
+		switch(type){
+			case 'touchstart':
+				ball.style.display = 'block';
+				break;
+			case 'touchmove': 
+				//android的4.4,4.0的bug：只触发touchstart，和一次的touchmove，touchend不触发
+				//加入evnt.preventDefault
+				event.preventDefault();
+				break;
+			case 'touchend':
+				ball.style.display = 'none';
+				break;
+		}
+	};
+
+	touchpad.addEventListener('touchstart',touchHandler);
+	touchpad.addEventListener('touchmove', touchHandler);
+	touchpad.addEventListener('touchend', touchHandler);
+
+
+</script>
+
+</body>
+</html>

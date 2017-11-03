@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解决IE6不支持固定定位问题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            /*解决IE6滚动条下拉时元素闪跳的问题*/
+            background: url(about:blank) fixed;
+        }
+
+        .warp {
+            width: 100%;
+            height: 2000px;
+        }
+
+        .bas {
+            display: none;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: fixed;
+            right: 50px;
+            bottom: 50px;
+            _position: absolute;
+            _right: 50px;
+            _top: expression(document.documentElement.clientHeight-this.offsetHeight-50+document.documentElement.scrollTop);
+            cursor: pointer;
+        }
+    </style>
+    <script src="jquery-1.7.1.js"></script>
+    <script>
+        $(function () {
+            var back = $(".bas");
+            back.click(function () {
+                var time = setInterval(function () {
+                    //缓慢过渡到顶部
+                    $(window).scrollTop($(window).scrollTop() - 50);
+                    if ($(window).scrollTop() == 0) {
+                        clearInterval(time)
+                    }
+                }, 20);
+            });
+            $(window).scroll(function () {
+                if ($(window).scrollTop() < 150) {
+                    back.hide(500);
+                } else {
+                    back.show(500);
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="warp">
+    <div class="bas"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<title>Document</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#banner {
+				width: 976px;
+				height: 378px;
+				margin: 170px auto;
+				box-shadow: 0 0 10px #666;
+				padding: 12px;
+			}
+			
+			#banner .pic {
+				width: 975px;
+				height: 340px;
+				position: relative;
+			}
+			
+			#banner .pic img {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 975px;
+				height: 340px;
+				display: none;
+			}
+			
+			#banner .tit {
+				width: 760px;
+				height: 38px;
+				margin: 0 auto;
+				position: relative;
+			}
+			
+			#banner .tit ul li {
+				list-style: none;
+				width: 190px;
+				font-size: 12px;
+				color: #666;
+				float: left;
+				text-align: center;
+				line-height: 38px;
+				position: relative;
+			}
+			
+			#banner .tit ul li:after {
+				content: "|";
+				position: absolute;
+				right: 0;
+			}
+			
+			#banner .tit ul li:last-of-type:after {
+				content: "";
+			}
+			
+			#banner .tit .exercise {
+				width: 190px;
+				height: 3px;
+				background: red;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="banner">
+			<div class="pic">
+				<img src="images/1.jpg" style="display: block;" />
+				<img src="images/2.jpg" />
+				<img src="images/3.jpg" />
+				<img src="images/4.jpg" />
+			</div>
+			<div class="tit">
+				<ul>
+					<li>荣耀V9魅焰红 唯品首发</li>
+					<li>百雀羚X御泥坊 VIP大牌日</li>
+					<li>全球购好货 1折起</li>
+					<li>出游装备节 最高满199减30</li>
+				</ul>
+				<div class="exercise"></div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var inText = -1;
+
+		function banner() {
+			inText++;
+			if(inText > 3) inText = 0;
+			var a = $(".pic img").eq(inText);
+			$(".pic img").eq(inText).fadeIn(300).siblings().fadeOut();
+			$(".exercise").stop().animate({
+				"left": inText * 190 + "px"
+			}, 500);
+		}
+
+		var stopBanner = setInterval(banner, 1000);
+		$(".tit ul li").mouseover(function() {
+			clearInterval(stopBanner);
+			inText = $(this).index();
+			$(".pic img").eq(inText).fadeIn(300).siblings().fadeOut();
+			$(".exercise").stop().animate({
+				"left": inText * 190 + "px"
+			}, 500);
+		}).mouseout(function() {
+			stopBanner = setInterval(banner, 1000)
+		});
+	</script>
+
+</html>

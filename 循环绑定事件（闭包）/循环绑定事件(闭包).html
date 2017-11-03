@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="caidan">
+    <!--点击a标签显示当前节点的下一个DIV图标，其余隐藏-->
+    <a class="a1" id="rxahl" href="javascript:">乳腺癌化疗宣教</a>
+    <div id="qbOne"></div>
+    <a class="a1" id="qslbhjs" href="javascript:">前哨淋巴结活检术</a>
+    <div id="qbTwo"></div>
+    <a class="a1" id="jzwknfmzl" href="javascript:">甲状外科内分泌治疗</a>
+    <div id="qbThree"></div>
+    <a class="a1" id="brss" href="javascript:">保乳手术</a>
+    <div id="qbFour"></div>
+    <a class="a1" id="rfyqzxzzs" href="javascript:">乳房I期整形再造术</a>
+    <div id="qbFive"></div>
+    <a class="a1" id="mlwh" href="javascript:">美丽无痕<br/>Mamotomme麦默通</a>
+    <div id="qbSix"></div>
+    <a class="a1" id="rxzwbj" href="javascript:">乳腺自我保健</a>
+    <div id="qbSeven"></div>
+    <a class="a1" id="rxahzq" href="javascript:">乳腺癌化早期症状<br/>及预防的疾病</a>
+    <div id="qbEight"></div>
+    <a class="a1" id="rxahzyzqkd" href="javascript:">乳腺癌患者<br/>应正确看待自己的疾病</a>
+    <div id="qbNine"></div>
+    <a class="a1" id="rxahzyzyph" href="javascript:">乳腺癌患者<br/>应当怎样配合</a>
+    <div id="qbTen"></div>
+    <a class="a1" id="rxashgndl" href="javascript:">乳腺癌术后功能锻炼</a>
+    <div id="qbEleven"></div>
+</div>
+</body>
+<script src="js/jquery-1.7.1.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var arr = document.getElementsByClassName('a1');
+        for (var i = 0; i < arr.length; i++) {
+            (function () {
+                var p = i;
+                arr[i].onclick = function () {
+                    var a = this.id;
+//                  alert("下标是"+p+"ID是"+a);
+                    $(".a1").next().css({"display": "none"});
+                    $(".a1").eq(p).next().css({"display": "block"});
+                    document.getElementById("videoid2").src = "mp4/" + a + ".mp4";
+                    document.getElementById("videoid2").load();
+                    document.getElementById("videoid2").volume = 0.8;
+                }
+            })();
+        }
+    }
+</script>
+</html>

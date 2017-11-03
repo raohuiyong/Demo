@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html {
+				font-size: 14px
+			}
+			
+			#dialog-message {
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				z-index: 100;
+				width: 300px;
+				min-height: 140px;
+				background: #fff;
+				border: 1px solid #c5c5c5;
+				border-radius: 5px;
+				margin-top: -70px;
+				margin-left: -150px;
+			}
+			
+			#dialog-message h3 {
+				width: 100%;
+				font-size: 14px;
+				border-top-right-radius: 5px;
+				border-top-left-radius: 5px;
+				padding-left: 10px;
+				box-sizing: border-box;
+				line-height: 36px;
+				background: #e9e9e9;
+				margin-bottom: 10px;
+				cursor: move;
+			}
+			
+			#dialog-message .dialog-body {
+				position: relative;
+			}
+			
+			#dialog-message p {
+				width: 100%;
+				height: 49px;
+				padding-left: 10px;
+				padding-bottom: 10px;
+				box-sizing: border-box;
+				border-bottom: 1px solid #c5c5c5;
+			}
+			
+			#dialog-message button.btn_ok {
+				float: right;
+				padding: 6px 14px 6px 14px;
+				margin: 5px 10px 7px 5px;
+				border: 1px solid #c5c5c5;
+				border-radius: 3px;
+				background: #f6f6f6;
+			}
+			
+			#dialog-message button.btn_ok:hover {
+				border: 1px solid #ccc;
+				background: #ededed;
+			}
+			
+			#dialog-message+.ui-widget-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 99;
+				background: #aaaaaa;
+				opacity: .3;
+				filter: Alpha(Opacity=30);
+			}
+			
+			.clearfix:after {
+				content: '';
+				display: block;
+				clear: both;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="dialog-message"></div>
+	</body>
+	<script type="text/javascript" src="script/jquery.js">
+	</script>
+	<script>
+		(function($) {
+			$.fn.dialog = function(options, Value) {
+				var init = {
+					title: '', //弹框标题
+					body: '', //弹框提示内容
+					confirm: 'ok', //确认按钮
+					autoOpen: true, //如果设置为true，对话框将在初始化时自动打开
+					modal: true, //模态背景默认显示     
+					button: {
+						ok: function() {}
+					}
+				};
+				if(typeof options == 'string') {
+					if(options == 'open') {
+						$(this).show();
+						return false;
+					} else if(options == 'close') {
+						$(this).hide();
+						return false;
+					} else if(options == 'setBody') {
+						init.title = $(this).find('h3').text();
+						init.body = Value;
+						init.confirm = $(this).find('.ui-widget button.btn_ok').text();
+						options = {}
+					} else {
+						return false;
+					}
+				}
+				return this.each(function() {
+					var opts = $.extend({}, init, options);
+					console.log(opts);
+					var $element = $(this),
+						body = '<h3>' + opts.title + '</h3>' +
+						'<div class=\"dialog-body\">' +
+						'<p>' + opts.body + '</p>' +
+						'<div class=\"ui-widget clearfix\">' +
+						'<button class=\"btn_ok\" type=\"button\">' + opts.confirm + '</button>' +
+						'</div>' +
+						'</div>';
+					if(opts.modal) {
+						var modal = '<div class=\"ui-widget-overlay ui-front\"></div>';
+						$element.html(body).after(modal)
+					} else {
+						$element.html(body)
+					}
+					if(opts.autoOpen) {
+						$element.show()
+					} else {
+						$element.hide()
+					}
+					$element.on('click', 'button.btn_ok', function() {
+						opts.button.ok && opts.button.ok.call($element)
+					})
+				})
+			}
+		})(jQuery);
+
+		$('#dialog-message').dialog({
+			title: '提示',
+			body: '我是弹窗',
+			button: {
+				ok: function() {
+					$(this).dialog("close")
+				}
+			}
+		});
+	</script>
+
+</html>

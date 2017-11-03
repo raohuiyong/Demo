@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<form enctype="multipart/form-date" method="post" class="rao-file">
+    <input type="file" class="file">
+    <input type="submit" class="sub">
+</form>
+<img src="" class="fileImg" style="width: 400px;height: 600px;">
+<script type="text/javascript">
+    $(function(){
+        $(".file").change(function(){
+            var fileImg = $(".fileImg");
+            var explorer = navigator.userAgent;
+            var imgSrc = $(this)[0].value;
+            alert(imgSrc);
+            if (explorer.indexOf('MSIE') >= 0) {
+                if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                    imgSrc = "";
+                    alert("文件格式错误");
+//                    fileImg.attr("src","/img/default.png");
+                    return false;
+                }else{
+                    fileImg.attr("src",imgSrc);
+                }
+            }else{
+                if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                    imgSrc = "";
+                    fileImg.attr("src","/img/default.png");
+                    return false;
+                }else{
+                    var file = $(this)[0].files[0];
+                    var url = URL.createObjectURL(file);
+                    fileImg.attr("src",url);
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

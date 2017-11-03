@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>响应式瀑布流懒加载</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+
+	</head>
+
+	<body>
+		<div id="container">
+
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript">
+		//百度图片数据接口
+		var url = 'http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&word=风景&callback=?';
+		var page = 1; //请求数据的分页
+		var cells = 0; //具体的列数
+		var width = 200; //每个图片的宽度
+		var space = 16; //每列之间的间隙
+		var outerWidth = width + space; //每个图片的实际宽度
+		var arrLeft = []; //存储定位的left值
+		var arrTop = []; //存储定位的top值
+		getCells(); //获取#container的宽度和显示的列数
+		//第一排图片的位置
+		for(var i = 0; i < cells; i++) {
+			arrTop.push(0); //第一排的top都为0
+			arrLeft.push(i * outerWidth);
+		}
+		//找到数组中高度最小的元素和位置
+		function getMinIndex(arr) {
+			var value = arr[0]; //先获取第一个元素
+			var index = 0; //存储位置索引
+			for(var i = 0; i < arr.length; i++) {
+				//先和第一个元素比较，把最小的值存储起来，再依次和后面的比较
+				if(arr[i] < value) {
+					value = arr[i];
+					index = i;
+				}
+			}
+			return index;
+		}
+		//获取列数
+		function getCells() {
+			cells = Math.floor(window.innerWidth / outerWidth);
+			if(cells < 3) cells = 3;
+			if(cells > 6) cells = 6;
+			$("#container").width(cells * outerWidth - space);
+
+		}
+		//通过接口请求数据
+		function loadImg() {
+			$.getJSON(url, {
+				pn: page
+			}, function(res) {
+				var data = res.data;
+				data.forEach(function(obj, index) {
+					var $div = $("<div/>");
+					var minIndex = getMinIndex(arrTop);
+					$div.addClass("item").animate({
+						left: arrLeft[minIndex],
+						top: arrTop[minIndex]
+					}, "slow").html("<img src=" + obj.hoverURL + " width=" + width + "/>");
+					$("#container").append($div);
+					//添加一个给arrTop加上top高度
+					arrTop[minIndex] += $div.height() + space;
+				});
+			});
+		}
+		loadImg();
+		$(window).on("scroll", function() {
+			/* 1.获取滚动条的高度
+			 * 2.获取浏览器窗口的高度
+			 * 3.获取文档的高度
+			 */
+			var t = $(window).scrollTop();
+			var h = $(window).height();
+			var b = $(document).height();
+			if(b < h + t + 50) {
+				page++;
+				loadImg();
+			}
+		});
+			//监听浏览器窗口的变化来改变图片显示的列数
+		$(window).on("resize", function() {
+			var oldCells = cells; //保存原来的列数
+			getCells();
+			if(oldCells == cells) return;
+			//先清空原来保存定位值得数组，再重新添加
+			arrLeft = [];
+			arrTop = [];
+			for(var i = 0; i < cells; i++) {
+				arrTop.push(0); //第一排的top都为0
+				arrLeft.push(i * outerWidth);
+			}
+			//对每个item元素重新赋予定位值
+			var $item = $("#container").find(".item");
+			$item.each(function() {
+				var minIndex = getMinIndex(arrTop); //获取高度最小的位置
+				$(this).stop().animate({
+					left: arrLeft[minIndex],
+					top: arrTop[minIndex]
+				}, "slow");
+				arrTop[minIndex] += $(this).height() + space;
+			})
+		});
+	</script>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>jqPaginator</title>
+    <link type="text/css" rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css"/>
+</head>
+<body style="padding:10px;">
+    <p id="p"></p>
+    <div id="pagination">
+    </div>
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jqPaginator.js"></script>
+<script type="text/javascript">
+/*
+ pageIndex  当前第几页
+ pageSize   每页显示的数据行数
+for(var i=pageIndex*pageSize;i<pageIndex*pageSize+pageSize;i++){
+        var str=" <tr><td class='no'>"+pageData.listJson[i].id+"</td><td>"+pageData.listJson[i].qqId+"</td><td>"+pageData.listJson[i].qqNub+"</td><td>"+pageData.listJson[i].qqName+"</td><td>"+pageData.listJson[i].qqPwd+"</td><td>"+pageData.listJson[i].qqEmail+"</td><td>"+pageData.listJson[i].qqAge+"</td><td><button class='btn btn-danger omit'>删除</button></td></tr>";
+        $("tbody").append(str);
+    }*/
+    $.jqPaginator('#pagination', {
+        totalPages: 110,  //总得页数=ajax的长度/每页显示的数据行数
+        visiblePages: 10, //列表选项
+        currentPage: 1,  //当前第几页
+        wrapper:'<ul class="pagination"></ul>',
+        first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+        prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+        next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+        last: '<li class="last"><a href="javascript:void(0);">最后一页</a></li>',
+        page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+        onPageChange: function (num) {
+            //参是当前的页数
+            $('#p').text(num);
+        }
+    });
+</script>
+</body>
+</html>

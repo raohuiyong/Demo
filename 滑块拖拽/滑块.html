@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>滑块</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.wrap {
+				width: 300px;
+				margin: 100px auto;
+			}
+			
+			.wrap .slider-inner {
+				position: relative;
+				width: 100%;
+				height: 6px;
+				top: 7px;
+				margin-bottom: 10px;
+				border: 1px solid #464332;
+				border-radius: 5px;
+				background: transparent;
+			}
+			
+			.wrap .slider-inner .slider-handle {
+				position: absolute;
+				display: block;
+				outline: none;
+				width: 20px;
+				height: 20px;
+				top: 50%;
+				margin-top: -10px;
+				margin-left: -10px;
+				border-radius: 50%;
+				background: red;
+			}
+			
+			.wrap .slider-inner .slider-tip {
+				position: absolute;
+				display: inline-block;
+				white-space: nowrap;
+				top: 50%;
+				left: -46px;
+				margin-top: -10px;
+				color: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="slider-inner">
+				<a href="javascript:" class="slider-handle"></a>
+				<span class="slider-tip">0.5</span>
+			</div>
+		</div>
+	</body>
+	<script>
+		(function(slider) {
+			var handle = slider.children[0],
+				tip = slider.children[1],
+				init_max = slider.offsetWidth;
+			/*默认位置50*/
+			handle.style.left = init_max / 100 * 50 + 'px';
+			/*定义拖拽事件*/
+			handle.onmousedown = function(e) {
+				e = e || window.event;
+				var initX = e.clientX;
+				var initLeft = this.offsetLeft + handle.offsetWidth / 2;
+				document.onmousemove = function(e) {
+					e = e || window.event;
+					var moveX = Math.max(Math.min(e.clientX - initX + initLeft, init_max), 0);
+					handle.style.left = moveX + 'px';
+					tip.innerText = (moveX / init_max).toFixed(2);
+				}
+				document.onmouseup = function() {
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+				return false;
+			}
+		})(document.getElementsByClassName('slider-inner')[0]);
+	</script>
+
+</html>

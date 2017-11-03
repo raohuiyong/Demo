@@ -1,0 +1,35 @@
+<input type="file" accept="image/*" capture="camera">
+
+<input type="file" accept="video/*" capture="camcorder">
+
+<input type="file" accept="audio/*" capture="microphone">
+
+accept表示打开的系统文件目录
+
+capture表示的是系统所捕获的默认设备，camera：照相机；camcorder：摄像机；microphone：录音；
+
+其中还有一个属性multiple，支持多选，当支持多选时，multiple优先级高于capture，所以只用写成：<input type="file" accept="image/*" multiple>就可以，可以在手机上测试一下。那么选中的图片怎样获取并显示呢？
+
+html：（css）
+
+<form id="form1" runat="server">
+<input type='file' id="imgInp" />
+<div>
+<img id="blah" src="#" alt="显示您上传的商品图片" />
+</div>  
+</form>
+
+js：
+
+function readURL(input) {
+   if (input.files && input.files[0]) {
+       var reader = new FileReader();
+       reader.onload = function (e) {
+           $('#blah').attr('src', e.target.result);
+       }
+       reader.readAsDataURL(input.files[0]);
+   }
+}
+$("#imgInp").change(function(){
+   readURL(this);
+});

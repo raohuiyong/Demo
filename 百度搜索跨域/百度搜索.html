@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<style>
+		ul{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		.search{
+			width: 300px;
+			max-height: 400px;
+			outline: 1px solid red;
+			display: none;
+		}
+	</style>
+
+</head>
+<body>
+	<img src="img/bd_logo1.png" alt="" class="title" />
+	<div class="show">
+		<input type="text" name="" id="text" />
+		<div class="search">
+			<ul>
+				
+			</ul>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	/**
+	 * 分析需求
+	 *	1. 在文本框内输入的字符 然后会出现搜索信息
+	 * 		a.找到文本框 
+	 * 		b.键盘事件
+	 */
+	var oText=document.getElementById("text");
+	var oSea=document.getElementsByClassName("search")[0];  //getElementsByClassName不兼容IE8以下
+	var oUl=oSea.getElementsByTagName("ul")[0];
+	oText.onkeyup=function(){
+		//鼠标敲击后即将发生的事件
+		var val=this.value;
+		oSea.style.display = val?"block":"none";
+		if(document.getElementById("scr")){
+			document.body.removeChild(document.getElementById("scr"));
+		}
+		var os = document.createElement("script");
+		os.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+val+"&json=1&p=3&sid=1440_21089_22074&req=2&bs=1&pbs=1&csor=1&cb=xiaolong";
+		os.id="scr";
+		document.body.appendChild(os);
+	}
+	function xiaolong (json) {
+		//console.log(json.s);
+		oUl.innerHTML = '';
+		json.s.forEach(function(k){
+			console.log(k);
+			var oLi = document.createElement("li");
+			oLi.innerHTML = k;
+			oUl.appendChild(oLi);
+		})
+	}
+
+	</script>
+</html>

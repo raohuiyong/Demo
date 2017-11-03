@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-size: 18px;
+        }
+        li{
+            list-style: none;
+        }
+        i,b{
+            font-style: normal;
+        }
+        a{
+            text-decoration: none;
+            color:#000;
+        }
+        .box{
+            width: 200px;
+            overflow: hidden;
+            outline: 1px solid red;
+        }
+
+       .item .itemHeader{
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            background-color: #5c71ff;
+            color: #fff;
+           position: relative;
+        }
+        .item .itemHeader b{
+            position: absolute;
+            left: 10px;
+            top: 50%;
+          /*  -webkit-transform: translateY(-5px) rotate(-90deg);
+            -moz-transform: translateY(-5px) rotate(-90deg);
+            -ms-transform: translateY(-5px) rotate(-90deg);
+            -o-transform: translateY(-5px) rotate(-90deg);
+            transform: translateY(-5px) rotate(-90deg);*/
+            width: 0;
+            height: 0;
+            border-top: 10px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+        .item .itemHeader i{
+            position: absolute;
+            left: 40px;
+        }
+        ul{
+            display: none;
+        }
+    </style>
+    <script src="jquery-1.7.1.js"></script>
+    <script>
+    $(function () {
+        $(".itemHeader").click(function () {
+            //  :visible判断元素是否可见
+            if($(this).parents('.item').find('ul').is(':visible')){
+                $(this).parents('.item').find('ul').hide(400);
+                $(this).find('b').css({"transform":"translateY(-5px) rotate(-90deg)"});
+            }else{
+                $(this).parents('.item').find('ul').show(400);
+                $(this).find('b').css({"transform":"translateY(-5px) rotate(0deg)"});
+                $(this).parents('.item').siblings().find('ul').hide(400);
+                $(this).parents('.item').siblings().find('b').css({"transform":"translateY(-5px) rotate(-90deg)"})
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+<div class="box">
+    <div class="item">
+        <div class="itemHeader">
+            <b></b><i>灯饰照明</i>
+        </div>
+        <ul>
+            <li><a href="javascript:">吸顶灯</a></li>
+            <li><a href="javascript:">吊灯</a></li>
+            <li><a href="javascript:">装饰灯</a></li>
+            <li><a href="javascript:">后盾网视频</a></li>
+        </ul>
+    </div>
+    <div class="item">
+        <div class="itemHeader">
+            <b></b><i>灯饰照明</i>
+        </div>
+        <ul>
+            <li><a href="javascript:">吸顶灯</a></li>
+            <li><a href="javascript:">吊灯</a></li>
+            <li><a href="javascript:">装饰灯</a></li>
+            <li><a href="javascript:">后盾网视频</a></li>
+        </ul>
+    </div>
+    <div class="item">
+        <div class="itemHeader">
+            <b></b><i>灯饰照明</i>
+        </div>
+        <ul>
+            <li><a href="javascript:">吸顶灯</a></li>
+            <li><a href="javascript:">吊灯</a></li>
+            <li><a href="javascript:">装饰灯</a></li>
+            <li><a href="javascript:">后盾网视频</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

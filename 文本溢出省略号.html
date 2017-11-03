@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-1.7.1.js"></script>
+    <script>
+       // alert(window.devicePixelRatio);
+        $(function(){
+            var width = $(window).width();
+            var font = width/10;
+            $("html").css("font-size",font+"px");
+            window.onresize=function(){
+                width = $(window).width();
+                font = width/10;
+                $("html").css("font-size",font+"px");
+            }
+        })
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .inaline {
+            overflow: hidden;
+            white-space: nowrap;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+        }
+
+        .intwoline {
+			display: -webkit-box;
+		    -webkit-box-orient: vertical;
+		    -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+		    -webkit-line-clamp: 3;
+		    overflow: hidden;
+        }
+
+        .u1 {
+            display: -webkit-flex;
+       //     height: 500px;
+
+            text-align: center;
+            border: 1px solid red;
+        }
+
+        .u1 li:first-of-type {
+       //     width: 100px;
+            flex:1;
+            background-color: red;
+          //  -webkit-align-self: flex-start;
+        }
+
+        .u1 li:nth-child(2) {
+        //    width: 200px;
+            background-color: blue;
+           // align-self: center;
+            flex:1;
+        }
+
+         .u1 li:last-of-type{
+       //      width:300px;
+             flex:1;
+             /*order:-1;   置顶*/
+             order:-1;
+             align-content: stretch;
+             background-color: chartreuse;
+          //   -webkit-align-self: auto;
+         }
+    </style>
+</head>
+<body>
+<p class="inaline">单行文本溢出单行文本溢出单行文本溢出单行文本溢asdfasdfasdfsadfasmsafasdfasdfasdf</p>
+<p class="intwoline">多行文本溢出多行文本溢出多行文本溢出多行文本溢出多行文溢出多行文本溢出多行文溢出多行文本溢出多行文溢出多行文本溢出多行文溢出多行文本溢出多行文本溢出多行文本asdfdasfasdfasd</p>
+<ul class="u1">
+    <li>首页</li>
+    <li>精选</li>
+    <li>海购</li>
+</ul>
+</body>
+</html>

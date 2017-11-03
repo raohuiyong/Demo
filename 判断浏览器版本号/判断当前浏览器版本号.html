@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+function getExplorerInfo() {
+    var explorer = window.navigator.userAgent.toLowerCase();
+    //ie
+    if (explorer.indexOf("msie") >= 0) {
+        var ver = explorer.match(/msie ([\d.]+)/)[1];
+        return {type: "IE", version: ver};
+    } else if (explorer.indexOf("trident") >= 10 ) {
+        //IE10以上
+        var ver = explorer.match(/rv:([\d.]+)/)[1];
+        return {type: "IE", version: ver};
+    }
+    //firefox
+    else if (explorer.indexOf("firefox") >= 0) {
+        var ver = explorer.match(/firefox\/([\d.]+)/)[1];
+        return {type: "Firefox", version: ver};
+    }
+    //Chrome
+    else if (explorer.indexOf("chrome") >= 0) {
+        var ver = explorer.match(/chrome\/([\d.]+)/)[1];
+        return {type: "Chrome", version: ver};
+    }
+    //Opera
+    else if (explorer.indexOf("opera") >= 0) {
+        var ver = explorer.match(/opera.([\d.]+)/)[1];
+        return {type: "Opera", version: ver};
+    }
+    //Safari
+    else if (explorer.indexOf("Safari") >= 0) {
+        var ver = explorer.match(/version\/([\d.]+)/)[1];
+        return {type: "Safari", version: ver};
+    }
+}
+        //弹出类型和版本号
+        alert("type:"+getExplorerInfo().type+"\nversion:"+getExplorerInfo().version);
+    </script>
+</head>
+<body>
+<script>
+    function WhichButton(event){
+        alert("你按下了: " + event.button)
+    }
+</script>
+<div onmousedown="WhichButton(event);">点击这个文本(用您的鼠标按钮)
+    <p>
+        0	指定左鼠标按钮<br>
+        1	指定中间鼠标按钮<br>
+        2	指定右鼠标按钮
+    </p>
+    <p><strong>注意:</strong> Internet Explorer 8及更早的版本返回其他结果。<br>
+        1	指定左鼠标按钮<br>
+        4	指定中间鼠标按钮<br>
+        2	指定右鼠标按钮
+    </p>
+</div>
+</body>
+</html>

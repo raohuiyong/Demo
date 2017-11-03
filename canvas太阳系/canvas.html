@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>canvas太阳系</title>
+		<link rel="stylesheet" type="text/css" href="init.css" />
+	</head>
+
+	<body>
+		<canvas id="canvas" width="900" height="900">您的浏览器不支持canvas</canvas>
+	</body>
+	<script type="text/javascript">
+		var can = document.getElementById("canvas");
+		//设置绘画的环境
+		var ctx = can.getContext("2d");
+
+		function drawTrack() {
+			//设置圆形路径：xy圆心坐标   r半径   0~Math.PI*2 绘制整圆 false逆时针
+			//绘制轨道
+			ctx.strokeStyle = "#fff"; //设置线条颜色
+			for(var i = 0; i < 9; i++) {
+				ctx.beginPath(); //开始路径（相当于重新绘制）
+				ctx.arc(450, 450, i * 50, 0, Math.PI * 2, false); //绘制圆形
+				ctx.stroke(); //路径显示在画布上
+			}
+		}
+		drawTrack();
+		//创建星体对象
+		function star(x, y, r, cycle, sColor, eColor) {
+			this.x = x;
+			this.y = y;
+			this.r = r;
+			this.cycle = cycle;
+			this.sColor = sColor;
+			this.eColor = eColor;
+			this.color = null;
+			this.time = 0;
+			this.draw = function() {
+				//重新改变坐标系 另外开闭一个空间
+				ctx.save(); //保存之前的画布信息(如果没有这一步骤，前面的坐标系会发生改变)
+				//重新改变坐标系 另外开闭一个空间
+				ctx.translate(450, 450); //把canvas画布坐标原点移动到450,450的位置，也就是画布的中心点
+				ctx.rotate((360 / this.cycle * this.time) * Math.PI / 180); //旋转  弧度 = Math.PI*度数/180
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false); //绘制一个实心圆
+				this.color = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r); //创建一个径向渐变色:内圆(坐标 半径) 外圆(坐标 半径)
+				this.color.addColorStop(0, this.sColor);
+				this.color.addColorStop(1, this.eColor);
+				ctx.fillStyle = this.color; //设置颜色
+				ctx.fill(); //填充矩形颜色
+				ctx.restore(); //释放之前保存的内容(圆会保存信息)
+				this.time += 0.5;
+			}
+		}
+		//实例化一个太阳
+		var sun = new star(0, 0, 20, 0, "#f00", "#ff0");
+
+		var mer = new star(50, 0, 13, 88, "#5C3E40", "#C4BBAC");
+
+		var ven = new star(100, 0, 22, 224, "#78B1E8", "#ff0");
+
+		var ear = new star(150, 0, 16, 365, "#f00", "#ff0");
+
+		var mar = new star(200, 0, 30, 1360, "#5C3E40", "#ff0");
+
+		var jup = new star(250, 0, 18, 265, "#f00", "#ff0");
+
+		var nep = new star(300, 0, 10, 1735, "#f00", "#ff0");
+
+		var pul = new star(350, 0, 18, 500, "red", "#ff0");
+
+		var uni = new star(400, 0, 30, 4689, "blue", "#ff0");
+
+		function move() {
+			ctx.clearRect(0,0,950,950);
+			drawTrack();
+			sun.draw();
+			mer.draw();
+			ven.draw();
+			ear.draw();
+			mar.draw();
+			jup.draw();
+			nep.draw();
+			pul.draw();
+			uni.draw();
+			requestAnimationFrame(move);
+		}
+		move();
+		
+	</script>
+
+</html>

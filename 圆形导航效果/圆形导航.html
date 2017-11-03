@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #cccccc;
+        }
+
+        p, .houdun {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #ffffff;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            position: absolute;
+            left: 200px;
+            top:200px;
+        }
+
+        .houdun {
+            background: #E7E5E7 url(img/1.png) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+            border: 5px solid #00A0E1;
+            cursor: pointer;
+            -webkit-transition: all 1s linear;
+            -moz-transition: all 1s linear;
+            -ms-transition: all 1s linear;
+            -o-transition: all 1s linear;
+            transition: all 1s linear;
+
+        }
+
+        .houdun:hover {
+            background: black url(img/1.png) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+            -webkit-transform: rotate(720deg);
+            -moz-transform: rotate(720deg);
+            -ms-transform: rotate(720deg);
+            -o-transform: rotate(720deg);
+            transform: rotate(720deg);
+        }
+
+        p:nth-child(1) {
+            background: url(img/2.jpg) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+        }
+
+        p:nth-child(2) {
+            background: url(img/3.jpg) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+        }
+
+        p:nth-child(3) {
+            background: url(img/4.jpg) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+        }
+
+        p:nth-child(4) {
+            background: url(img/5.png) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+        }
+
+        p:nth-child(5) {
+            background: url(img/6.jpg) center no-repeat;
+            -webkit-background-size: 150%;
+            background-size: 150%;
+        }
+    </style>
+    <script>
+        //获取元素
+        var ps = document.getElementsByTagName('p');
+        var c=0;
+        var r=200;
+        //通过遍历给所有的p元素赋值
+        for(var i =0; i<ps.length;i++){
+         ps[i].style.left=hd_left + 'px';
+         ps[i].style.top=hd_top + 'px';
+        }
+        //绑定点击事件
+        function houdun() {
+            if(c == 0){
+                c=1;
+                for(var i =0,b=ps.length;i<b;i++){
+                    //获得每个元素的度数
+                    var deg= -180/ps.length*i;
+//                    圆的弧度  2*Math.PI
+
+//                    一角度占多少个弧度呢?
+//                    1角度=2*Math.PI/360=Math.PI/180
+
+//                    一弧度占多少个角度呢?
+//                    1弧度=360/2*Math.PI=180/Math.PI
+//                    计算坐标  y=Math.sin()*r
+//                              x=Math.cos()*r
+                    var num=gougu(deg,r);
+                    //每个p元素所在的位置
+                    ps[i].style.left=200 + num.gu + 'px';
+                    ps[i].style.top=200 + num.gou + 'px';
+                    //给每个p元素添加旋转动画
+                    ps[i].style.transform="rotate(720deg)";
+                    ps[i].style.transition="all 1s"+" "+0.5*i+"s";
+                }
+            }else {
+                c=0;
+                for(var i=0,b=ps.length;i<b;i++){
+                    //初始化每个p元素所在的位置
+                    ps[i].style.left=200 + 'px';
+                    ps[i].style.top=200 + 'px';
+                    //初始化每个p元素添加旋转动画
+                    ps[i].style.transform="rotate(0deg)";
+                }
+            }
+        }
+        function gougu(deg,r) {
+            var gou=Math.sin(deg*Math.PI/180)*r;
+            var gu=Math.cos(deg*Math.PI/180)*r;
+            return {"gou":gou,"gu":gu};
+        }
+    </script>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div class="houdun" onclick="houdun()"></div>
+</body>
+</html>
